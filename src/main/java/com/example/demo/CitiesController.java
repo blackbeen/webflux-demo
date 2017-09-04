@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,12 +20,12 @@ public class CitiesController {
 	}
 
 	@GetMapping("/cities/{id}")
-	public City findById(@PathVariable String id) {
-		return this.repository.findById(id).orElse(null);
+	public Mono<City> findById(@PathVariable String id) {
+		return this.repository.findById(id);
 	}
 
 	@GetMapping("/cities")
-	public Iterable<City> all() {
+	public Flux<City> all() {
 		return this.repository.findAll();
 	}
 }
